@@ -30,10 +30,11 @@ public class UserController {
 			method=RequestMethod.POST)
 	public void submitUserDetails(@RequestBody Users user)
 	{
+
 		userRepo.save(user);
 	}
 
-	@RequestMapping(value="/findUserById",
+	@RequestMapping(value="/findUser",
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			method= RequestMethod.GET)
 	@ResponseBody
@@ -59,7 +60,6 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Optional<Users>> login(@RequestBody Users user) 
 	{
-		
 		Optional<Users> userDB = userRepo.findById(user.getEmail());
 		
 		if(userDB.isPresent() && userDB.get().getPassword().equals(user.getPassword()))

@@ -1,19 +1,33 @@
 package com.mooremaking.object;
 
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
 
+@Entity
 @Table(name="blogpost")
 public class Posts {
 	
 	@Id
+	@Column(name="post_id")
 	private long postID;
+	
+	@Column(name="post_dategory")
 	private String postCategory;
+	
+	@Column(name="post_title")
 	private String postTitle;
+	
+	@Column(name="post")
 	private String post;
+	
+	@Column(name="post_image_url")
 	private String postImageURL;
+	
+	@Column(name="post_date")
 	private String postDate;
 	
 	public long getPostID() {
