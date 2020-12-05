@@ -33,12 +33,40 @@ public class UserController {
 
 		userRepo.save(user);
 	}
+	
+	@RequestMapping(value="/updateUserDetails", 
+			consumes=MediaType.APPLICATION_JSON_VALUE, 
+			produces=MediaType.APPLICATION_JSON_VALUE, 
+			method=RequestMethod.POST)
+	public void updateUser(@RequestBody Users user)
+	{
+		Users temp = new Users();
+		if(userRepo.findById(user.getEmail()) != null) {
+			if(user.getEmail().length() !=0)
+				temp.setEmail(user.getEmail());
+			if(user.getPassword().length() != 0)
+				temp.setPassword(user.getPassword());
+			if(user.getUserName().length() != 0)
+				temp.setUserName(user.getUserName());
+			temp.setRole("user");
+		}
+	}
+	
+	@RequestMapping(value="/deleteUser", 
+			consumes=MediaType.APPLICATION_JSON_VALUE, 
+			produces=MediaType.APPLICATION_JSON_VALUE, 
+			method=RequestMethod.POST)
+	public void deleteUser(@RequestBody String email)
+	{
+
+		userRepo.deleteById(email);
+	}
 
 	@RequestMapping(value="/findUser",
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			method= RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Optional<Users>> findStudent(String email)
+	public ResponseEntity<Optional<Users>> findUser(String email)
 	{
 		return new ResponseEntity<>(userRepo.findById(email), HttpStatus.OK);
 	}
@@ -47,7 +75,7 @@ public class UserController {
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Users>> listStudent()
+	public ResponseEntity<List<Users>> listUser()
 	{
 		
 		return new ResponseEntity<>(userRepo.findAll(), HttpStatus.OK);
@@ -58,7 +86,7 @@ public class UserController {
 			produces=MediaType.APPLICATION_JSON_VALUE,
 			method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Optional<Users>> login(@RequestBody Users user) 
+	public ResponseEntity<Optional<Users>> userLogin(@RequestBody Users user) 
 	{
 		Optional<Users> userDB = userRepo.findById(user.getEmail());
 		

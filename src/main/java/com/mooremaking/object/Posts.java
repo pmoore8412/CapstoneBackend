@@ -1,8 +1,12 @@
 package com.mooremaking.object;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +16,7 @@ import javax.persistence.Table;
 public class Posts {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="post_id")
 	private long postID;
 	
@@ -28,8 +33,55 @@ public class Posts {
 	private String postImageURL;
 	
 	@Column(name="post_date")
-	private String postDate;
+	private Date postDate;
 	
+	@Column(name="day")
+	private int day;
+	
+	@Column(name="month")
+	private int month;
+	
+	@Column(name="year")
+	private int year;
+	
+	@Column(name="featured")
+	private boolean featured;
+	
+	@Column(name="sub_featured")
+	private boolean subFeatured;
+	
+	public boolean isSubFeatured() {
+		return subFeatured;
+	}
+
+	public void setSubFeatured(boolean subFeatured) {
+		this.subFeatured = subFeatured;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 	public long getPostID() {
 		return postID;
 	}
@@ -70,12 +122,20 @@ public class Posts {
 		this.postImageURL = postImageURL;
 	}
 	
-	public String getPostDate() {
+	public Date getPostDate() {
 		return postDate;
 	}
 	
-	public void setPostDate(String postDate) {
+	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
+	}
+
+	public boolean isFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(boolean featured) {
+		this.featured = featured;
 	}
 
 }
