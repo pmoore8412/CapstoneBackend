@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mooremaking.config.WebUtils;
 import com.mooremaking.object.Users;
 import com.mooremaking.repository.UserRepository;
 
@@ -24,13 +25,25 @@ public class UserController {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Autowired
+	WebUtils webUtils;
+	
+	
+	
+	@RequestMapping(value="/sendMail",  
+			produces=MediaType.APPLICATION_JSON_VALUE, 
+			method=RequestMethod.POST)
+	public void sendMail(String from, String msg, String subject)
+	{
+		webUtils.sendMail("simplymooremaking@gmail.com", msg, subject + "-" + from);
+	}
+	
 	@RequestMapping(value="/submitUserDetails", 
 			consumes=MediaType.APPLICATION_JSON_VALUE, 
 			produces=MediaType.APPLICATION_JSON_VALUE, 
 			method=RequestMethod.POST)
 	public void submitUserDetails(@RequestBody Users user)
 	{
-
 		userRepo.save(user);
 	}
 	
@@ -49,7 +62,11 @@ public class UserController {
 			if(user.getUserName().length() != 0)
 				temp.setUserName(user.getUserName());
 			temp.setRole("user");
+			temp.setEmailOptIn(false);
+			
+			user = temp;
 		}
+		userRepo.save(user);
 	}
 	
 	@RequestMapping(value="/deleteUser", 

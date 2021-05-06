@@ -13,6 +13,9 @@ public class Comments {
 	@Column(name="comment_id")
 	private long commentID;
 	
+	@Column(name="related_postid")
+	private long relatedPostID;
+	
 	@Column(name="user_comment")
 	private String userComment;
 	
@@ -41,6 +44,14 @@ public class Comments {
 	
 	public void setCommentDate(String commentDate) {
 		this.commentDate = commentDate;
+	}
+
+	public long getRelatedPostID() {
+		return relatedPostID;
+	}
+
+	public void setRelatedPostID(long relatedPostID) {
+		this.relatedPostID = relatedPostID;
 	}
 	
 }
